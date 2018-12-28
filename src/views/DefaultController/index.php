@@ -1,7 +1,5 @@
 <?php include(dirname(__DIR__) . '/header.php'); ?>
 
-<h1>Slider Generator</h1>
-<img src="../../resources/images/slider-icon.png" alt="Slider icon" width="150">
 <h3>
     Create your responsive image slider using online generator!
 </h3>

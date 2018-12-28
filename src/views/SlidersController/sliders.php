@@ -1,8 +1,6 @@
 <?php include(dirname(__DIR__) . '/header.php') ?>
 
-    <h1>Slider Generator</h1>
     <h2>Manage your sliders from this panel!</h2>
-    <h3>If you want to go to the main page click <a href="/?page=index">here</a>.</h3>
 
 <?php if(isset($message)): ?>
     <?php foreach($message as $item): ?>
@@ -11,9 +9,20 @@
 <?php endif; ?>
 
 <?php if(isset($sliders)): ?>
-    <table>
-    <?php foreach($sliders as $slider): ?>
+    <table class="table">
+        <thead class="thead-light">
         <tr>
+            <th scope="col">#ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Generate code</th>
+            <th scope="col">Edit slider</th>
+            <th scope="col">Remove slider</th>
+        </tr>
+        </thead>
+        <tbody class="table-striped">
+        <?php foreach($sliders as $slider): ?>
+        <tr>
+            <th scope="row"><?= $slider->getId() ?></th>
             <td><?= $slider->getName() ?></td>
             <td>
                 <form action="?page=codeslider&slider=<?= $slider->getId() ?>" method="POST">
@@ -31,14 +40,15 @@
                 </form>
             </td>
         </tr>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+        </tbody>
     </table>
 <?php endif; ?>
 
     <h2>Add new slider:</h2>
 
     <form class="addslider" action="?page=addslider" method="POST">
-        <input name="name" placeholder="Slider's name" type="text"/><br>
+        <input name="name" placeholder="Slider's name" type="text"/>
         <input type="submit" value="+"/>
     </form>
 

@@ -1,12 +1,12 @@
-footer {
-  position: static;
-  font-weight: bold;
-  padding: 15px;
-  a {
-    color: black;
+.footer {
+  h6 {
+    margin-bottom: 0;
+  }
+  img {
+    margin-left: 10px;
   }
   a:hover {
-    color: white;
-    font-weight: bold;
+    text-decoration: none;
+    color: $basic-color;
   }
 }

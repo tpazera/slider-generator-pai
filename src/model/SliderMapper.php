@@ -60,11 +60,27 @@ class SliderMapper
             $stmt->bindParam(':id_user', $id_user, PDO::PARAM_STR);
             $stmt->execute();
 
-            $slider = $stmt->fetch(PDO::FETCH_ASSOC);
-            return 'Slider added!';
+
+
+            return true;
         }
         catch(PDOException $e) {
-            return 'Error: ' . $e->getMessage();
+            return false;
         }
     }
+
+    public function removeSliderById(
+        int $id
+    ):bool {
+        try {
+            $stmt = $this->database->connect()->prepare('DELETE FROM sliders WHERE id_slider = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            return false;
+        }
+    }
+
 }

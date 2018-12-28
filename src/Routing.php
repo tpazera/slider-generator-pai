@@ -40,9 +40,9 @@ class Routing
                 'controller' => 'SlidersController',
                 'action' => 'editslider'
             ],
-            'upload' => [
-                'controller' => 'UploadController',
-                'action' => 'upload'
+            'removeslider' => [
+                'controller' => 'SlidersController',
+                'action' => 'removeslider'
             ],
             'player' => [
                 'controller' => 'PlayerController',

@@ -1,20 +1,10 @@
 body {
   .wrapper {
     table {
-      margin: 0 auto;
-      border-collapse: collapse;
-      border-spacing: 0 5em;
-      width: 60%;
       tr {
+        background-color: #fff;
         td {
-          border-top: 1px solid black;
-          border-bottom: 1px solid black;
-          display: table-cell;
-          vertical-align: middle;
-          text-align: center;
           form {
-            padding: 10px;
-            margin-bottom: 0;
             input[type="submit"] {
               border: none;
               box-shadow: none;
@@ -49,22 +39,19 @@ body {
           }
         }
       }
-      tr:hover {
-        background-color: rgba(67, 119, 240, 0.35);
-        color: white;
-      }
     }
     form.addslider {
       input[type='text'] {
         border: 1px solid black;
         padding: 10px;
         margin-bottom: 10px;
+        font-size: 20px;
       }
       input[type='submit'] {
         height: 50px;
         width: 50px;
         color: white;
-        font-size: 35px;
+        font-size: 20px;
         background-color: #4fab44;
         border: none;
         border-radius: 10px;
