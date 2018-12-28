@@ -1,29 +1,28 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: tomek
+ * Date: 28.12.18
+ * Time: 01:28
+ */
 
-require_once __DIR__.'/../Database.php';
+require_once 'Slider.php';
 
 class SlidersList
 {
-    private $database;
 
-    public function __construct()
+    private $sliders = array();
+
+    public function __construct(array $slidersList)
     {
-        $this->database = new Database();
-    }
-
-    public function getSlidersList(
-
-    ):array {
-        try {
-            $stmt = $this->database->connect()->prepare('SELECT * FROM sliders WHERE id_user = :id;');
-            $stmt->bindParam(':id', $_SESSION['id_user'], PDO::PARAM_STR);
-            $stmt->execute();
-
-            $slidersList = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            return $slidersList;
-        }
-        catch(PDOException $e) {
-            return 'Error: ' . $e->getMessage();
+        foreach ($slidersList as $slider) {
+            array_push($this->sliders, new Slider($slider['id_slider'], $slider['name'], $slider['height'], $slider['speed'], $slider['user']));
         }
     }
+
+    public function getSliders(): array
+    {
+        return $this->sliders;
+    }
+
 }

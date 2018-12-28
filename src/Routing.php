@@ -36,6 +36,10 @@ class Routing
                 'controller' => 'SlidersController',
                 'action' => 'addslider'
             ],
+            'editslider' => [
+                'controller' => 'SlidersController',
+                'action' => 'editslider'
+            ],
             'upload' => [
                 'controller' => 'UploadController',
                 'action' => 'upload'

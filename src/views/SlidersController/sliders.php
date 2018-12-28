@@ -14,19 +14,19 @@
     <table>
     <?php foreach($sliders as $slider): ?>
         <tr>
-            <td><?= $slider['name'] ?></td>
+            <td><?= $slider->getName() ?></td>
             <td>
-                <form action="?page=code&slider=<?= $slider['id'] ?>" method="POST">
+                <form action="?page=codeslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="code" value="Generate code"/>
                 </form>
             </td>
             <td>
-                <form action="?page=edit$slider=<?= $slider['id'] ?>" method="POST">
+                <form action="?page=editslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="edit" value="Edit"/>
                 </form>
             </td>
             <td>
-                <form action="?page=remove&slider=<?= $slider['id'] ?>" method="POST">
+                <form action="?page=removeslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="remove" value="Remove"/>
                 </form>
             </td>
