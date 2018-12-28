@@ -1,0 +1,14 @@
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-weight: bold;
+  padding: 15px;
+  a {
+    color: black;
+  }
+  a:hover {
+    color: white;
+    font-weight: bold;
+  }
+}

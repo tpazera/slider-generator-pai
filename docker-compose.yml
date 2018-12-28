@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb:10.3.9
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pai
+      MYSQL_USER: tpazera
+      MYSQL_PASSWORD: aebb8e49
+    ports:
+      - "3306:3306"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    depends_on:
+      - db
+    volumes:
+      - ./src/:/var/www/html/
+    ports:
+      - "80:80"
+    stdin_open: true
+    tty: true

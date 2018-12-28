@@ -1,0 +1,79 @@
+body {
+  .wrapper {
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      border-spacing: 0 5em;
+      width: 60%;
+      tr {
+        td {
+          border-top: 1px solid black;
+          border-bottom: 1px solid black;
+          display: table-cell;
+          vertical-align: middle;
+          text-align: center;
+          form {
+            padding: 10px;
+            margin-bottom: 0;
+            input[type="submit"] {
+              border: none;
+              box-shadow: none;
+              padding: 10px 30px 10px 30px;
+              color: white;
+              transition: 0.3s;
+            }
+            input[type="submit"].code {
+              background-color: $basic-color;
+              border-color: $basic-color;
+            }
+            input[type="submit"].remove {
+              background-color: red;
+              border-color: red;
+            }
+            input[type="submit"].edit {
+              background-color: green;
+              border-color: green;
+            }
+            input[type="submit"].code:hover {
+              background-color: #2B42F0;
+              border-color: #2B42F0;
+            }
+            input[type="submit"].remove:hover {
+              background-color: #9c0000;
+              border-color: #9c0000;
+            }
+            input[type="submit"].edit:hover {
+              background-color: #005b00;
+              border-color: #005b00;
+            }
+          }
+        }
+      }
+      tr:hover {
+        background-color: rgba(67, 119, 240, 0.35);
+        color: white;
+      }
+    }
+    form.addslider {
+      input[type='text'] {
+        border: 1px solid black;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      input[type='submit'] {
+        height: 50px;
+        width: 50px;
+        color: white;
+        font-size: 35px;
+        background-color: #4fab44;
+        border: none;
+        border-radius: 10px;
+        box-shadow: none;
+        transition: 0.3s;
+      }
+      input[type='submit']:hover {
+        background-color: #005b00;
+      }
+    }
+  }
+}
