@@ -4,6 +4,7 @@ require_once('controllers/DefaultController.php');
 require_once('controllers/SlidersController.php');
 require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
+require_once('controllers/EditorController.php');
 
 class Routing
 {
@@ -44,9 +45,9 @@ class Routing
                 'controller' => 'SlidersController',
                 'action' => 'removeslider'
             ],
-            'player' => [
-                'controller' => 'PlayerController',
-                'action' => 'player'
+            'updateslider' => [
+                'controller' => 'EditorController',
+                'action' => 'updateSlider'
             ]
         ];
     }

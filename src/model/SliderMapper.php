@@ -131,6 +131,29 @@ class SliderMapper
             return true;
         }
         catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+    }
+
+
+    public function updateSlider(
+        int $id, string $name, int $height, int $speed
+    ):bool {
+        try {
+            //UPDATE SLIDER's SETTINGS
+            $stmt = $this->database->connect()->prepare('UPDATE sliders SET name = :name, height = :height, speed = :speed WHERE id_slider = :id;');
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            $stmt->bindParam(':height', $height, PDO::PARAM_STR);
+            $stmt->bindParam(':speed', $speed, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            ?> <script>console.log("something went wrong")</script> <?php
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            ?> <script>console.log("something went wrong" <?php echo $e ?>)</script> <?php
             return false;
         }
     }

@@ -5,9 +5,10 @@ require_once "AppController.php";
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
 require_once __DIR__.'/../model/SliderMapper.php';
+require_once 'Validator.php';
 
 
-class SlidersController extends AppController
+class SlidersController extends AppController implements Validator
 {
 
     public function __construct()
@@ -44,7 +45,7 @@ class SlidersController extends AppController
         return $mapper->removeSliderById($id);
     }
 
-    private function checkIfOwner(int $id): bool {
+    public function checkIfOwner(int $id): bool {
         $mapper = new SliderMapper();
         $slider = $mapper->getSliderById($id);
         if($slider->getUser() == $_SESSION['id_user'])
@@ -84,6 +85,7 @@ class SlidersController extends AppController
         if(isset($_SESSION['id_user'])) {
             if ($this->isPost()) {
                 if($this->checkIfOwner($_GET['slider'])) {
+                    $_SESSION["id_slider"] = $_GET['slider'];
                     $this->render('editslider', ['slider' => $this->getSliderById($_GET['slider'])]);
                 } else {
                     $mapper = new SliderMapper();

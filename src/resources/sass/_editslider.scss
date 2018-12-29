@@ -1,0 +1,39 @@
+label {
+  font-weight: bold;
+}
+
+//SPEED RANGE INPUT
+#sliderSpeed {
+  -webkit-appearance: none;
+  margin-top: 9.5px;
+  width: 100%;
+  height: 19px;
+  background: #ffffff;
+  outline: none;
+  opacity: 0.6;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+
+#sliderSpeed:hover {
+  opacity: 1;
+}
+
+#sliderSpeed::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+  background: $basic-color;
+  cursor: pointer;
+}
+
+#sliderSpeed::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: $basic-color;
+  cursor: pointer;
+}
