@@ -14,9 +14,7 @@
         <tr>
             <th scope="col">#ID</th>
             <th scope="col">Name</th>
-            <th scope="col">Generate code</th>
-            <th scope="col">Edit slider</th>
-            <th scope="col">Remove slider</th>
+            <th scope="col">Functions</th>
         </tr>
         </thead>
         <tbody class="table-striped">
@@ -28,13 +26,9 @@
                 <form action="?page=codeslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="code" value="Generate code"/>
                 </form>
-            </td>
-            <td>
                 <form action="?page=editslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="edit" value="Edit"/>
                 </form>
-            </td>
-            <td>
                 <form action="?page=removeslider&slider=<?= $slider->getId() ?>" method="POST">
                     <input type="submit" class="remove" value="Remove"/>
                 </form>

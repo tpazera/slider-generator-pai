@@ -60,8 +60,8 @@ class SlidersController extends AppController
         if(isset($_SESSION['id_user'])) {
             if ($this->isPost()) {
                 //VALIDATE SLIDER'S NAME
-                if (preg_match('/[^A-Z a-z]/', $_POST['name'])) {
-                    $this->render('sliders', ['message' => ['The slider\'s name should only consist of letters (' . $_POST['name'] . ' is wrong!)'], 'sliders' => $this->getSliders()]);
+                if (preg_match('/[^A-Z a-z0-9]/', $_POST['name'])) {
+                    $this->render('sliders', ['message' => ['The slider\'s name should only consist of letters, spaces and numbers<br>(' . $_POST['name'] . ' is wrong!)'], 'sliders' => $this->getSliders()]);
                 } else {
                     //ADDING SLIDER!!!
                     $addbool = $mapper->addSlider($_POST['name'], 500, 3000, $_SESSION['id_user']);
