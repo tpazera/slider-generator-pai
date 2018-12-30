@@ -5,6 +5,7 @@ require_once "AppController.php";
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
 require_once __DIR__.'/../model/SliderMapper.php';
+require_once __DIR__.'/../model/SlideMapper.php';
 require_once 'Validator.php';
 
 
@@ -31,7 +32,7 @@ class SlidersController extends AppController implements Validator
     {
         $mapper = new SliderMapper();
         $sliders = $mapper->getSlidersList();
-        return $sliders->getSliders();
+        return $sliders->getList();
     }
 
     private function getSliderById(int $id): Slider
@@ -45,6 +46,13 @@ class SlidersController extends AppController implements Validator
         return $mapper->removeSliderById($id);
     }
 
+    private function getSlides(): array
+    {
+        $mapper = new SlideMapper();
+        $slides = $mapper->getSlidesList();
+        return $slides->getList();
+    }
+
     public function checkIfOwner(int $id): bool {
         $mapper = new SliderMapper();
         $slider = $mapper->getSliderById($id);
@@ -52,7 +60,6 @@ class SlidersController extends AppController implements Validator
             return true;
         return false;
     }
-
 
     public function addslider() {
 
@@ -86,7 +93,7 @@ class SlidersController extends AppController implements Validator
             if ($this->isPost()) {
                 if($this->checkIfOwner($_GET['slider'])) {
                     $_SESSION["id_slider"] = $_GET['slider'];
-                    $this->render('editslider', ['slider' => $this->getSliderById($_GET['slider'])]);
+                    $this->render('editslider', ['slider' => $this->getSliderById($_GET['slider']), 'slides' => $this->getSlides()]);
                 } else {
                     $mapper = new SliderMapper();
                     $name = $mapper->getSliderById($_GET['slider'])->getName();

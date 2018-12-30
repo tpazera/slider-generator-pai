@@ -7,8 +7,9 @@
  */
 
 require_once 'Slider.php';
+require_once 'ItemsList.php';
 
-class SlidersList
+class SlidersList implements ItemsList
 {
 
     private $sliders = array();
@@ -20,7 +21,7 @@ class SlidersList
         }
     }
 
-    public function getSliders(): array
+    public function getList(): array
     {
         return $this->sliders;
     }

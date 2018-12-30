@@ -3,6 +3,11 @@ jQuery(document).ready(function () {
         console.log("Updating slider...");
         updateSliderDB();
     });
+
+    jQuery("#sliderName, #sliderSpeed, #sliderHeight").change(function () {
+        jQuery("#saveSlider").removeClass("btn-success").addClass("btn-danger");
+        //jQuery("#saveSlider").addClass("btn-error");
+    });
 });
 
 function updateSliderDB() {
@@ -34,6 +39,8 @@ function updateSliderDB() {
         success: function() {
             console.log("Slider updated!");
             jQuery("#sliderHeader").html(jQuery("#sliderName").val());
+            jQuery(".bgcontainer").css("height", height+"px");
+            jQuery("#saveSlider").removeClass("btn-danger").addClass("btn-success");
 
         },
         error: function() {

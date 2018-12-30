@@ -1,7 +1,9 @@
 label {
   font-weight: bold;
 }
-
+.slide-container label {
+  font-weight: 400;
+}
 //SPEED RANGE INPUT
 #sliderSpeed {
   -webkit-appearance: none;
@@ -36,4 +38,34 @@ label {
   height: 25px;
   background: $basic-color;
   cursor: pointer;
+}
+
+.badges .badge {
+  font-size: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+  &.badge-primary:hover {
+    background-color: #0014ff;
+  }
+  &.badge-danger:hover {
+    background-color: #ff0018;
+  }
+  &.badge-secondary:hover {
+    background-color: #3a3b3c;
+  }
+}
+
+.add-text, .add-block {
+  display: inline-block;
+  width: 40%;
+  margin: 5%;
+}
+
+.add-text {
+  float: right;
+}
+
+.add-block {
+  float: left;
 }
