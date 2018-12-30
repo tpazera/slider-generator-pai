@@ -4,6 +4,7 @@ require_once('controllers/DefaultController.php');
 require_once('controllers/SlidersController.php');
 require_once('controllers/UploadController.php');
 require_once('controllers/PlayerController.php');
+require_once('controllers/EditorController.php');
 
 class Routing
 {
@@ -36,13 +37,17 @@ class Routing
                 'controller' => 'SlidersController',
                 'action' => 'addslider'
             ],
-            'upload' => [
-                'controller' => 'UploadController',
-                'action' => 'upload'
+            'editslider' => [
+                'controller' => 'SlidersController',
+                'action' => 'editslider'
             ],
-            'player' => [
-                'controller' => 'PlayerController',
-                'action' => 'player'
+            'removeslider' => [
+                'controller' => 'SlidersController',
+                'action' => 'removeslider'
+            ],
+            'updateslider' => [
+                'controller' => 'EditorController',
+                'action' => 'updateSlider'
             ]
         ];
     }

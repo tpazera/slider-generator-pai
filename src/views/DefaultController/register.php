@@ -1,6 +1,5 @@
 <?php include(dirname(__DIR__) . '/header.php') ?>
 
-    <h1>Slider Generator</h1>
     <h2>Register your account!</h2>
     <h3>If you have an account, log in <a href="/?page=login">here</a>.</h3>
 

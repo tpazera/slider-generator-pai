@@ -1,0 +1,1 @@
+var setting_apiUrl = "http://localhost";

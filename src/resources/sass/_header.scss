@@ -1,0 +1,15 @@
+.navbar {
+  .navbar-brand {
+    margin-left: 15px;
+    h2 {
+      margin-left: 20px;
+      line-height: 50px;
+      float: right;
+      margin-bottom: 0;
+    }
+  }
+  .nav-item:hover {
+    text-shadow: 0 0 0.01px black;
+    font-weight: 400;
+  }
+}
