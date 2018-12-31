@@ -48,6 +48,30 @@ class Routing
             'updateslider' => [
                 'controller' => 'EditorController',
                 'action' => 'updateSlider'
+            ],
+            'addblock' => [
+                'controller' => 'EditorController',
+                'action' => 'addBlock'
+            ],
+            'addtext' => [
+                'controller' => 'EditorController',
+                'action' => 'addText'
+            ],
+            'updatetext' => [
+                'controller' => 'EditorController',
+                'action' => 'updateText'
+            ],
+            'updatetextpos' => [
+                'controller' => 'EditorController',
+                'action' => 'updateTextPos'
+            ],
+            'updateblock' => [
+                'controller' => 'EditorController',
+                'action' => 'updateBlock'
+            ],
+            'updateblockpos' => [
+                'controller' => 'EditorController',
+                'action' => 'updateBlockPos'
             ]
         ];
     }

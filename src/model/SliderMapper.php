@@ -147,12 +147,10 @@ class SliderMapper
             $stmt->bindParam(':speed', $speed, PDO::PARAM_STR);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);
             $stmt->execute();
-            ?> <script>console.log("something went wrong")</script> <?php
             return true;
         }
         catch(PDOException $e) {
             echo $e;
-            ?> <script>console.log("something went wrong" <?php echo $e ?>)</script> <?php
             return false;
         }
     }

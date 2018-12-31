@@ -7,6 +7,7 @@
  */
 
 require_once 'Block.php';
+require_once 'BlockMapper.php';
 
 class BlocksList implements ItemsList
 {
@@ -25,4 +26,15 @@ class BlocksList implements ItemsList
         return $this->blocks;
     }
 
+    public function addItem(string $color, float $pos, int $zindex, int $id_slide): void
+    {
+        $mapper = new BlockMapper();
+        $id_block = $mapper->addBlock($color, $pos, $zindex, $id_slide);
+        if($id_block) {
+            array_push($this->blocks, new Block($id_block, 100, 100, $color, $zindex, $pos, $pos, $id_slide));
+        }
+        $arr = array();
+        array_push($arr, $id_block);
+        echo json_encode($arr);
+    }
 }

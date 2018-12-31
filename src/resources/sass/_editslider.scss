@@ -69,3 +69,17 @@ label {
 .add-block {
   float: left;
 }
+
+.badge.disabled {
+  opacity: 0.5;
+  &.badge-primary:hover {
+    background-color: #007bff;
+  }
+  &.badge-secondary:hover {
+    background-color: #6c757d;
+  }
+}
+
+.dialog {
+  display: none;
+}

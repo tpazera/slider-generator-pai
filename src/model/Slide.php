@@ -21,9 +21,9 @@ class Slide
         $this->bgsize = $bgsize;
         $this->id_slider = $id_slider;
         $textMapper = new TextMapper();
-        $this->texts = $textMapper->getTextsList($id);
+        $this->texts = $textMapper->getTextsList((int)$id);
         $blockMapper = new BlockMapper();
-        $this->blocks = $blockMapper->getBlocksList($id);
+        $this->blocks = $blockMapper->getBlocksList((int)$id);
     }
 
     public function getId()
@@ -95,5 +95,4 @@ class Slide
     {
         $this->blocks = $blocks;
     }
-
 }

@@ -50,14 +50,14 @@
                         <div class="card-body">
                             <div class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="height: <?php echo $slider->getHeight(); ?>px; background-image: url('../../resources/upload/<?= $slider->getId(); ?>/<?= $slide->getBgimage(); ?>'); background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
+                                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; background-image: url('../../resources/upload/<?= $slider->getId(); ?>/<?= $slide->getBgimage(); ?>'); background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
                                         <?php $texts = $slide->getTexts(); ?>
                                         <?php foreach($texts->getList() as $text): ?>
-                                            <div id="textcontainer<?= $text->getId(); ?> " class="textcontainer" style="position: relative; left: <?= $text->getX(); ?>; top: <?= $text->getY(); ?>; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
+                                            <div id="textcontainer<?= $text->getId(); ?>" data-el="<?= $text->getId(); ?>" class="textcontainer element" style="position: absolute; left: <?= $text->getX(); ?>px; top: <?= $text->getY(); ?>px; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
                                         <?php endforeach; ?>
                                         <?php $blocks = $slide->getBlocks(); ?>
                                         <?php foreach($blocks->getList() as $block): ?>
-                                            <div id="textcontainer<?= $block->getId(); ?> " class="textcontainer" style="position: relative; left: <?= $block->getX(); ?>; top: <?= $block->getY(); ?>; z-index: <?= $block->getZindex(); ?>; width: <?= $block->getWidth(); ?>; height: <?= $block->getHeight(); ?>; background-color: <?= $block->getColor(); ?>"></div>
+                                            <div id="blockcontainer<?= $block->getId(); ?>" data-el="<?= $block->getId(); ?>" class="blockcontainer element" style="position: absolute; left: <?= $block->getX(); ?>px; top: <?= $block->getY(); ?>px; z-index: <?= $block->getZindex(); ?>; width: <?= $block->getWidth(); ?>px; height: <?= $block->getHeight(); ?>px; background-color: <?= $block->getColor(); ?>"></div>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
@@ -113,8 +113,6 @@
                                                 <li class="element<?= $element->getId() ?> <?= get_class($element) ?> list-group-item d-flex justify-content-between align-items-center">
                                                     <?= get_class($element) ?> #<?= $element->getId() ?>
                                                     <div class="badges">
-                                                        <span class="badge badge-primary badge-pill">UP</span>
-                                                        <span class="badge badge-secondary badge-pill">DOWN</span>
                                                         <span class="badge badge-danger badge-pill">DELETE</span>
                                                     </div>
                                                 </li>
@@ -125,12 +123,46 @@
                                             <button id="addText<?= $slide->getId(); ?>" onclick="addBlock(<?= $slide->getId(); ?>)" type="submit" class="btn btn-warning add-block">Add block</button>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="dialogscontainer">
+                <?php
+                    $x = 0;
+                ?>
+                <?php foreach($slide->getTexts()->getList() as $text): ?>
+                    <div class="dialogText<?= $text->getId() ?> dialog" id="dialogText<?= $text->getId() ?>" title="Text #<?= $text->getId() ?>">
+                        <p class="validateTips">Edit settings of this block!</p>
+                        <form class="dialogForm" id="dialogForm<?= $text->getId() ?>">
+                            <fieldset>
+                                <label for="text">Text</label><br>
+                                <input type="text" name="text" id="text<?= $text->getId() ?>" value="<?= $text->getText() ?>" class="text ui-widget-content ui-corner-all">
+                                <label for="zindex">Wage (z-index)</label><br>
+                                <input type="number" min=0 name="zindex" id="zindexText<?= $text->getId() ?>" value="<?= $text->getZindex() ?>" class="text ui-widget-content ui-corner-all">
+                                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                            </fieldset>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
+                <?php foreach($slide->getBlocks()->getList() as $block): ?>
+                    <div class="dialogBlock<?= $block->getId() ?> dialog" id="dialogBlock<?= $block->getId() ?>" title="Block #<?= $block->getId() ?>">
+                        <p class="validateTips">Edit settings of this block!</p>
+                        <form class="dialogForm" id="dialogForm<?= $block->getId() ?>">
+                            <fieldset>
+                                <label for="height">Height</label><br>
+                                <input type="number" name="height" id="height<?= $block->getId() ?>" value="<?= $block->getHeight() ?>" class="text ui-widget-content ui-corner-all">
+                                <label for="width">Width</label><br>
+                                <input type="number" name="width" id="width<?= $block->getId() ?>" value="<?= $block->getWidth() ?>" class="text ui-widget-content ui-corner-all">
+                                <label for="zindex">Wage (z-index)</label>
+                                <input type="number" min=0 name="zindex" id="zindexBlock<?= $block->getId() ?>" value="<?= $block->getZindex() ?>" class="text ui-widget-content ui-corner-all">
+                                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                            </fieldset>
+                        </form>
+                    </div>
+                <?php endforeach; ?>
             </div>
             <?php $i++ ?>
         <?php endforeach; ?>
