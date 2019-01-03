@@ -65,12 +65,12 @@ class EditorController extends AppController implements Validator
 
 
     public function updateBlock() {
-        if (!isset($_POST['id_block']) && !isset($_POST['width']) && !isset($_POST['height']) && !isset($_POST['zindex'])) {
+        if (!isset($_POST['id_block']) && !isset($_POST['width']) && !isset($_POST['height']) && !isset($_POST['zindex']) && !isset($_POST['color'])) {
             http_response_code(404);
             return;
         }
         $blockMapper = new BlockMapper();
-        $blockMapper->updateBlock((int)$_POST['id_block'], (int)$_POST['width'], (int)$_POST['height'], (int)$_POST['zindex']);
+        $blockMapper->updateBlock((int)$_POST['id_block'], (int)$_POST['width'], (int)$_POST['height'], (int)$_POST['zindex'], $_POST['color']);
         http_response_code(200);
     }
 

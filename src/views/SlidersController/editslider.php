@@ -21,7 +21,7 @@
             <input class="form-control" type="text" id="sliderName" value="<?= $slider->getName() ?>" />
         </div>
         <div class="form-group col-lg-3 col-md-6 height-container">
-            <label for="sliderHeight">Height (100px - 1000px)</label>
+            <label for="sliderHeight">Height (100px - 500px)</label>
             <input class="form-control" type="number" max="1000" min="100" id="sliderHeight" value="<?= $slider->getHeight() ?>" />
         </div>
         <div class="form-group col-lg-3 col-md-6 speed-container">
@@ -53,11 +53,11 @@
                                     <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; background-image: url('../../resources/upload/<?= $slider->getId(); ?>/<?= $slide->getBgimage(); ?>'); background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
                                         <?php $texts = $slide->getTexts(); ?>
                                         <?php foreach($texts->getList() as $text): ?>
-                                            <div id="textcontainer<?= $text->getId(); ?>" data-el="<?= $text->getId(); ?>" class="textcontainer element" style="position: absolute; left: <?= $text->getX(); ?>px; top: <?= $text->getY(); ?>px; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
+                                            <div id="textcontainer<?= $text->getId(); ?>" data-el="<?= $text->getId(); ?>" class="textcontainer element" style="position: absolute; left: <?= $text->getX(); ?>%; top: <?= $text->getY(); ?>%; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
                                         <?php endforeach; ?>
                                         <?php $blocks = $slide->getBlocks(); ?>
                                         <?php foreach($blocks->getList() as $block): ?>
-                                            <div id="blockcontainer<?= $block->getId(); ?>" data-el="<?= $block->getId(); ?>" class="blockcontainer element" style="position: absolute; left: <?= $block->getX(); ?>px; top: <?= $block->getY(); ?>px; z-index: <?= $block->getZindex(); ?>; width: <?= $block->getWidth(); ?>px; height: <?= $block->getHeight(); ?>px; background-color: <?= $block->getColor(); ?>"></div>
+                                            <div id="blockcontainer<?= $block->getId(); ?>" data-el="<?= $block->getId(); ?>" class="blockcontainer element" style="position: absolute; left: <?= $block->getX(); ?>%; top: <?= $block->getY(); ?>%; z-index: <?= $block->getZindex(); ?>; width: <?= $block->getWidth(); ?>%; height: <?= $block->getHeight(); ?>%; background-color: <?= $block->getColor(); ?>"></div>
                                         <?php endforeach; ?>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     </div>
                                     <div class="col-md-5 offset-md-1 col-12">
                                         <h4>Elements</h4>
-                                        <ol id="elements<?= $slide->getId(); ?>" class="list-group">
+                                        <ol id="elements<?= $slide->getId(); ?>" class="list-group elements-list">
                                             <?php
                                             $elements = array_merge($slide->getTexts()->getList(),$slide->getBlocks()->getList());
                                             usort($elements, "cmp");
@@ -139,9 +139,9 @@
                         <form class="dialogForm" id="dialogForm<?= $text->getId() ?>">
                             <fieldset>
                                 <label for="text">Text</label><br>
-                                <input type="text" name="text" id="text<?= $text->getId() ?>" value="<?= $text->getText() ?>" class="text ui-widget-content ui-corner-all">
+                                <textarea type="text" name="text" id="text<?= $text->getId() ?>" value="<?= $text->getText() ?>" class="form-control text ui-widget-content ui-corner-all vresize" ></textarea>
                                 <label for="zindex">Wage (z-index)</label><br>
-                                <input type="number" min=0 name="zindex" id="zindexText<?= $text->getId() ?>" value="<?= $text->getZindex() ?>" class="text ui-widget-content ui-corner-all">
+                                <input type="number" min=0 name="zindex" id="zindexText<?= $text->getId() ?>" value="<?= $text->getZindex() ?>" class="form-control text ui-widget-content ui-corner-all">
                                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                             </fieldset>
                         </form>
@@ -153,11 +153,13 @@
                         <form class="dialogForm" id="dialogForm<?= $block->getId() ?>">
                             <fieldset>
                                 <label for="height">Height</label><br>
-                                <input type="number" name="height" id="height<?= $block->getId() ?>" value="<?= $block->getHeight() ?>" class="text ui-widget-content ui-corner-all">
+                                <input type="number" name="height" id="height<?= $block->getId() ?>" value="<?= $block->getHeight() ?>" class="form-control text ui-widget-content ui-corner-all"><br>
                                 <label for="width">Width</label><br>
-                                <input type="number" name="width" id="width<?= $block->getId() ?>" value="<?= $block->getWidth() ?>" class="text ui-widget-content ui-corner-all">
-                                <label for="zindex">Wage (z-index)</label>
-                                <input type="number" min=0 name="zindex" id="zindexBlock<?= $block->getId() ?>" value="<?= $block->getZindex() ?>" class="text ui-widget-content ui-corner-all">
+                                <input type="number" name="width" id="width<?= $block->getId() ?>" value="<?= $block->getWidth() ?>" class="form-control text ui-widget-content ui-corner-all"><br>
+                                <label for="zindex">Wage (z-index)</label><br>
+                                <input type="number" min=0 name="zindex" id="zindexBlock<?= $block->getId() ?>" value="<?= $block->getZindex() ?>" class="form-control text ui-widget-content ui-corner-all"><br>
+                                <label for="color">Color</label><br>
+                                <input type="color" min=0 name="color" id="color<?= $block->getId() ?>" value="<?= $block->getColor() ?>" class="form-control text ui-widget-content ui-corner-all">
                                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
                             </fieldset>
                         </form>

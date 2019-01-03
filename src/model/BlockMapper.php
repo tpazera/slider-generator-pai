@@ -37,7 +37,7 @@ class BlockMapper
     ) {
         try {
             //ADD BLOCK
-            $stmt = $this->database->connect()->prepare('INSERT INTO blocks (width, height, color, x, y, z_index, id_slide) VALUES (100, 100, :color, :pos, :pos, :z_index, :id_slide);');
+            $stmt = $this->database->connect()->prepare('INSERT INTO blocks (width, height, color, x, y, z_index, id_slide) VALUES (10, 10, :color, :pos, :pos, :z_index, :id_slide);');
             $stmt->bindParam(':color', $color, PDO::PARAM_STR);
             $stmt->bindParam(':pos', $pos, PDO::PARAM_STR);
             $stmt->bindParam(':z_index', $zindex, PDO::PARAM_STR);
@@ -60,15 +60,16 @@ class BlockMapper
     }
 
     public function updateBlock(
-        int $id, int $width, int $height, int $zindex
+        int $id, int $width, int $height, int $zindex, string $color
     ):bool {
         try {
             //UPDATE TEXT's SETTINGS
-            $stmt = $this->database->connect()->prepare('UPDATE blocks SET width = :width, height = :height, z_index = :zindex WHERE id_block = :id;');
+            $stmt = $this->database->connect()->prepare('UPDATE blocks SET width = :width, height = :height, z_index = :zindex, color = :color WHERE id_block = :id;');
             $stmt->bindParam(':width', $width, PDO::PARAM_STR);
             $stmt->bindParam(':height', $height, PDO::PARAM_STR);
             $stmt->bindParam(':zindex', $zindex, PDO::PARAM_STR);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':color', $color, PDO::PARAM_STR);
             $stmt->execute();
             return true;
         }
