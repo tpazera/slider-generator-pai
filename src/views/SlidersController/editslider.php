@@ -21,7 +21,7 @@
             <input class="form-control" type="text" id="sliderName" value="<?= $slider->getName() ?>" />
         </div>
         <div class="form-group col-lg-3 col-md-6 height-container">
-            <label for="sliderHeight">Height (100px - 500px)</label>
+            <label for="sliderHeight">Height (100px - 1000px)</label>
             <input class="form-control" type="number" max="1000" min="100" id="sliderHeight" value="<?= $slider->getHeight() ?>" />
         </div>
         <div class="form-group col-lg-3 col-md-6 speed-container">
@@ -66,7 +66,7 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
-                                        <h4>Slider's settings</h4>
+                                        <h4>Slide's settings</h4>
                                         <div class="form-group container row">
                                             <label for="bgcolor<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background color</label>
                                             <div class="col-md-6 col-12">
@@ -76,7 +76,7 @@
                                         <div class="form-group container row">
                                             <label for="bgimage<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background image</label>
                                             <div class="col-md-6 col-12">
-                                                <input id="bgcolor<?= $slide->getId(); ?>" type="file" class="" value="<?= $slide->getBgimage(); ?>" />
+                                                <input id="background<?= $slide->getId(); ?>" type="file" class="" value="<?= $slide->getBgimage(); ?>" />
                                             </div>
                                         </div>
                                         <div class="form-group container row">
@@ -113,7 +113,7 @@
                                                 <li class="element<?= $element->getId() ?> <?= get_class($element) ?> list-group-item d-flex justify-content-between align-items-center">
                                                     <?= get_class($element) ?> #<?= $element->getId() ?>
                                                     <div class="badges">
-                                                        <span class="badge badge-danger badge-pill">DELETE</span>
+                                                        <span class="badge badge-danger badge-pill" data-element="<?= $element->getId(); ?>" data-slide="<?= $slide->getId(); ?>">DELETE</span>
                                                     </div>
                                                 </li>
                                             <?php endforeach; ?>

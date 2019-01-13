@@ -94,4 +94,20 @@ class TextMapper
         }
     }
 
+    public function deleteText(
+        int $id
+    ):bool {
+        try {
+            //UPDATE TEXT's SETTINGS
+            $stmt = $this->database->connect()->prepare('DELETE FROM textblocks WHERE id_text = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+    }
+
 }

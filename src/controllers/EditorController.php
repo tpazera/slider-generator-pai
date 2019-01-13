@@ -8,6 +8,9 @@ require_once __DIR__.'/../model/SliderMapper.php';
 class EditorController extends AppController implements Validator
 {
 
+    const MAX_FILE_SIZE = 1024*1024;
+    const SUPPORTED_TYPES = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
+
     public function __construct()
     {
         parent::__construct();
@@ -81,7 +84,7 @@ class EditorController extends AppController implements Validator
             return;
         }
         $blockMapper = new BlockMapper();
-        $blockMapper->updateBlockPos((int)$_POST['id_block'], $_POST['x'], (int)$_POST['y']);
+        $blockMapper->updateBlockPos((int)$_POST['id_block'], $_POST['x'], $_POST['y']);
         http_response_code(200);
     }
 
@@ -102,7 +105,68 @@ class EditorController extends AppController implements Validator
             return;
         }
         $textMapper = new TextMapper();
-        $textMapper->updateTextPos((int)$_POST['id_text'], $_POST['x'], (int)$_POST['y']);
+        $textMapper->updateTextPos((int)$_POST['id_text'], $_POST['x'], $_POST['y']);
         http_response_code(200);
     }
+
+    public function deleteText() {
+        if (!isset($_POST['id_text']) && !isset($_POST['id_slide'])) {
+            http_response_code(404);
+            return;
+        }
+        $slideMapper = new SlideMapper();
+        $slide = $slideMapper->getSlideById((int)$_POST['id_slide']);
+        if (!((int)$slide->getIdSlider() == (int)$_SESSION['id_slider'])) {
+            http_response_code(404);
+            return;
+        }
+        $textMapper = new TextMapper();
+        $textMapper->deleteText((int)$_POST['id_text']);
+        http_response_code(200);
+    }
+
+    public function deleteBlock() {
+        if (!isset($_POST['id_block']) && !isset($_POST['id_slide'])) {
+            http_response_code(404);
+            return;
+        }
+        $slideMapper = new SlideMapper();
+        $slide = $slideMapper->getSlideById((int)$_POST['id_slide']);
+        if (!((int)$slide->getIdSlider() == (int)$_SESSION['id_slider'])) {
+            http_response_code(404);
+            return;
+        }
+        $blockMapper = new BlockMapper();
+        $blockMapper->deleteBlock((int)$_POST['id_block']);
+        http_response_code(200);
+    }
+
+    public function updateSlide() {
+//        if ($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']) && isset($_POST['id']) && isset($_POST['color']) && isset($_POST['bgsize'])) {
+//
+//            $folder = dirname(__DIR__).'/resources/upload/'.$_POST['id'];
+//            if (!move_uploaded_file($_FILES['file']['tmp_name'], $folder.$_FILES['file']['name'])) {
+//                //die();
+//            }
+//        }
+
+        $folder = dirname(__DIR__).'/resources/sass/';
+        move_uploaded_file($_FILES['file']['tmp_name'], $folder.$_FILES['file']['name']);
+        http_response_code(200);
+
+    }
+
+    private function validate(array $file): bool
+    {
+        if ($file['size'] > self::MAX_FILE_SIZE) {
+            return false;
+        }
+
+        if (!isset($file['type']) || !in_array($file['type'], self::SUPPORTED_TYPES)) {
+            return false;
+        }
+
+        return true;
+    }
+
 }

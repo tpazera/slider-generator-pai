@@ -29,7 +29,6 @@ jQuery(document).ready(function () {
 
 
     jQuery( ".blockcontainer" ).each(function( index ) {
-        console.log(jQuery(this));
         var id = jQuery(this).attr("data-el");
         var dialog = jQuery( "#dialogBlock" + id ).dialog({
             autoOpen: false,
@@ -166,15 +165,14 @@ function addBlock(id) {
                 console.log(JSON.parse(data)[0]);
                 console.log(textStatus);
                 console.log(status);
-                jQuery("ol li .badge-secondary").removeClass("disabled");
                 jQuery("#bgcontainer"+id).append('<div id="blockcontainer' + JSON.parse(data)[0] + '" class="blockcontainer element" style="position: absolute; left: ' + pos + '%; top: ' + pos + '%; z-index: ' + zindex + '; width: 10%; height: 10%; background-color: ' + color + ';"></div>')
                 jQuery("#blockcontainer" + JSON.parse(data)[0]).draggable({
                     cursor: "move",
                     stop: function() {
                         var x = jQuery(this).css("left");
                         var y = jQuery(this).css("top");
-                        var l = ( 100 * parseFloat(jQuery(this).position().left / parseFloat($(this).parent().width())) );
-                        var t = ( 100 * parseFloat(jQuery(this).position().top / parseFloat($(this).parent().height())) );
+                        var l = ( 100 * parseFloat(jQuery(this).position().left / parseFloat(jQuery(this).parent().width())) );
+                        var t = ( 100 * parseFloat(jQuery(this).position().top / parseFloat(jQuery(this).parent().height())) );
                         var id = jQuery(this).attr("data-el");
                         jQuery.ajax({
                             url : setting_apiUrl + '/?page=updateblockpos',
@@ -238,6 +236,25 @@ function addBlock(id) {
                     '       <span class="badge badge-danger badge-pill">DELETE</span>' +
                     '   </div>' +
                     '</li>');
+                jQuery(".element" + JSON.parse(data)[0] + " > div > span").on("click", function () {
+                    var label = jQuery(this);
+                    console.log("Deleting " + JSON.parse(data)[0] + " of " + id);
+                    jQuery.ajax({
+                        url : setting_apiUrl + '/?page=deleteblock',
+                        method : "POST",
+                        data : {
+                            id_block: JSON.parse(data)[0],
+                            id_slide: id
+                        },
+                        success: function() {
+                            console.log("Block deleted!");
+                            label.parent().parent().remove();
+                            jQuery("#bgcontainer" + id + " #blockcontainer" + JSON.parse(data)[0]).remove();
+
+                        },
+                        error: function() {}
+                    });
+                });
             },
             error: function(xhr, textStatus, error) {
                 console.log(xhr.responseText);
@@ -247,7 +264,7 @@ function addBlock(id) {
             }
         });
     } else {
-        jQuery("#addText"+id).addClass("disabled");
+        jQuery("#addBlock"+id).addClass("disabled");
         alert("You can only add 10 elements to one slide!")
     }
 

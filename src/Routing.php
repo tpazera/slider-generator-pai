@@ -65,6 +65,10 @@ class Routing
                 'controller' => 'EditorController',
                 'action' => 'updateTextPos'
             ],
+            'deletetext' => [
+                'controller' => 'EditorController',
+                'action' => 'deleteText'
+            ],
             'updateblock' => [
                 'controller' => 'EditorController',
                 'action' => 'updateBlock'
@@ -72,6 +76,14 @@ class Routing
             'updateblockpos' => [
                 'controller' => 'EditorController',
                 'action' => 'updateBlockPos'
+            ],
+            'deleteblock' => [
+                'controller' => 'EditorController',
+                'action' => 'deleteBlock'
+            ],
+            'updateslide' => [
+                'controller' => 'EditorController',
+                'action' => 'updateSlide'
             ]
         ];
     }

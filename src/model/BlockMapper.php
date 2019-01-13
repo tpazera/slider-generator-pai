@@ -97,4 +97,20 @@ class BlockMapper
         }
     }
 
+    public function deleteBlock(
+        int $id
+    ):bool {
+        try {
+            //UPDATE TEXT's SETTINGS
+            $stmt = $this->database->connect()->prepare('DELETE FROM blocks WHERE id_block = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+    }
+
 }
