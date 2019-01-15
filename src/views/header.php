@@ -6,8 +6,12 @@
     <meta name="description" content="Slider generator created By Tomasz Pazera">
     <meta name="author" content="Tomasz Pazera">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/resources/css/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="/resources/css/style.css">
+
 </head>
 <body class="<?= $bg ?>">
 <div class="wrapper">

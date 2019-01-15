@@ -1,7 +1,9 @@
 label {
   font-weight: bold;
 }
-
+.slide-container label {
+  font-weight: 400;
+}
 //SPEED RANGE INPUT
 #sliderSpeed {
   -webkit-appearance: none;
@@ -37,3 +39,72 @@ label {
   background: $basic-color;
   cursor: pointer;
 }
+
+.badges .badge {
+  font-size: 15px;
+  &:hover {
+    cursor: pointer;
+  }
+  &.badge-primary:hover {
+    background-color: #0014ff;
+  }
+  &.badge-danger:hover {
+    background-color: #ff0018;
+  }
+  &.badge-secondary:hover {
+    background-color: #3a3b3c;
+  }
+}
+
+.add-text, .add-block {
+  display: inline-block;
+  width: 40%;
+  margin: 5%;
+}
+
+.add-text {
+  float: right;
+}
+
+.add-block {
+  float: left;
+}
+
+.badge.disabled {
+  opacity: 0.5;
+  &.badge-primary:hover {
+    background-color: #007bff;
+  }
+  &.badge-secondary:hover {
+    background-color: #6c757d;
+  }
+}
+
+.dialog {
+  display: none;
+}
+
+.addSlideForm {
+  width: 100%;
+  text-align: center;
+}
+
+.addSlide {
+  margin: 25px auto;
+  font-size: 50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  border: none;
+  background-color: #008300;
+  color: white;
+  &:hover {
+    background-color: #00c600;
+  }
+}
+
+body > div.note-popover.popover.in.note-link-popover.bottom, body > div.note-popover.popover.in.note-image-popover.bottom, body > div.note-popover.popover.in.note-table-popover.bottom {
+  display: none;
+}
+
+.ui-dialog { z-index: 1000000000 !important ;}

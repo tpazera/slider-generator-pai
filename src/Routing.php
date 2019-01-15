@@ -3,8 +3,9 @@
 require_once('controllers/DefaultController.php');
 require_once('controllers/SlidersController.php');
 require_once('controllers/UploadController.php');
-require_once('controllers/PlayerController.php');
+require_once('controllers/CodeController.php');
 require_once('controllers/EditorController.php');
+require_once('controllers/AdminController.php');
 
 class Routing
 {
@@ -48,6 +49,58 @@ class Routing
             'updateslider' => [
                 'controller' => 'EditorController',
                 'action' => 'updateSlider'
+            ],
+            'updateslide' => [
+                'controller' => 'EditorController',
+                'action' => 'updateSlider'
+            ],
+            'addblock' => [
+                'controller' => 'EditorController',
+                'action' => 'addBlock'
+            ],
+            'addtext' => [
+                'controller' => 'EditorController',
+                'action' => 'addText'
+            ],
+            'updatetext' => [
+                'controller' => 'EditorController',
+                'action' => 'updateText'
+            ],
+            'updatetextpos' => [
+                'controller' => 'EditorController',
+                'action' => 'updateTextPos'
+            ],
+            'deletetext' => [
+                'controller' => 'EditorController',
+                'action' => 'deleteText'
+            ],
+            'updateblock' => [
+                'controller' => 'EditorController',
+                'action' => 'updateBlock'
+            ],
+            'updateblockpos' => [
+                'controller' => 'EditorController',
+                'action' => 'updateBlockPos'
+            ],
+            'deleteblock' => [
+                'controller' => 'EditorController',
+                'action' => 'deleteBlock'
+            ],
+            'addslide' => [
+                'controller' => 'SlidersController',
+                'action' => 'addSlide'
+            ],
+            'codeslider' => [
+                'controller' => 'SlidersController',
+                'action' => 'code'
+            ],
+            'admin' => [
+                'controller' => 'AdminController',
+                'action' => 'admin'
+            ],
+            'changerole' => [
+                'controller' => 'AdminController',
+                'action' => 'changeRole'
             ]
         ];
     }

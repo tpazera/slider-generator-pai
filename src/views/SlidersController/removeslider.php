@@ -14,15 +14,12 @@
 <?php endif; ?>
 
 <script>
-    jQuery(document).ready(function() {
-        var timer = 4;
-        setInterval(function () {
-            jQuery(".timer").html(timer);
-            timer--;
-        }, 1000)
-        window.setTimeout('window.location="/?page=sliders";', 5000);
-    });
+    var timer = 4;
+    setInterval(function () {
+        jQuery(".timer").html(timer);
+        timer--;
+    }, 1000);
+    window.setTimeout('window.location="/?page=sliders";', 5000);
 </script>
-
 
 <?php include(dirname(__DIR__) . '/footer.php') ?>

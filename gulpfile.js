@@ -28,7 +28,9 @@ gulp.task('sass', function () {
 });
 
 gulp.task('uglify', function () {
-    gulp.src('./src/resources/lib/*.js')
+    gulp.src([
+        './src/resources/lib/*.js'
+    ])
         .pipe(concat('main.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./src/resources/js'));

@@ -32,7 +32,7 @@ class UserMapper
         string $name, string $surname, string $email, string $password
     ) {
         try {
-            $stmt = $this->database->connect()->prepare('INSERT INTO users (email, password, name, surname, id_role) VALUES (:email, :password, :name, :surname, 1);');
+            $stmt = $this->database->connect()->prepare('INSERT INTO users (email, password, name, surname, id_role) VALUES (:email, :password, :name, :surname, 2);');
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':password', $password, PDO::PARAM_STR);
             $stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -44,6 +44,39 @@ class UserMapper
         }
         catch(PDOException $e) {
             return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function getUsers(
+    ): array
+    {
+        try {
+            $stmt = $this->database->connect()->prepare('SELECT id, name, surname, email, password, role FROM pai.users LEFT JOIN pai.roles ON users.id_role = roles.id_role;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $arrUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $arrUsers;
+        }
+        catch(PDOException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+    }
+
+    public function changeRole(
+        int $id_user, int $id_role
+    ):bool {
+        try {
+            //UPDATE TEXT's SETTINGS
+            $stmt = $this->database->connect()->prepare('UPDATE users SET id_role = :id_role WHERE id = :id_user;');
+            $stmt->bindParam(':id_role', $id_role, PDO::PARAM_STR);
+            $stmt->bindParam(':id_user', $id_user, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
         }
     }
 }

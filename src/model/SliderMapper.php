@@ -1,6 +1,5 @@
 <?php
 
-require_once 'User.php';
 require_once __DIR__.'/../Database.php';
 require_once 'SlidersList.php';
 
@@ -100,10 +99,12 @@ class SliderMapper
             $stmt->execute();
 
             //CREATE FOLDER
-            $folder = dirname(__DIR__).'/resources/upload/'.$id_slider['max_slider'];
+            $folder = dirname(__DIR__).'/resources/upload/'.$id_slider['max_slider'].'/images';
+            $old_umask = umask(0);
             if (!mkdir($folder, 0777, true)) {
                 die('Failed to create folders...');
             }
+            umask($old_umask);
             if (!copy(dirname(__DIR__).'/resources/images/backgrounds/doodles.png', $folder.'/default.png')) {
                 die('Failed to copy default slide\'s background...');
             }
@@ -128,6 +129,13 @@ class SliderMapper
 
             //DELETE FOLDER
             self::deleteDir(dirname(__DIR__).'/resources/upload/'.$id);
+            try {
+                $archive_name = dirname(__DIR__).'/resources/upload/zips/slider'.$_GET["slider"].'.tar';
+                unlink($archive_name);
+                unlink($archive_name.'.gz');
+            } catch(Exception $e) {
+                //echo $e;
+            }
             return true;
         }
         catch(PDOException $e) {
@@ -148,13 +156,26 @@ class SliderMapper
             $stmt->bindParam(':speed', $speed, PDO::PARAM_STR);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);
             $stmt->execute();
-            ?> <script>console.log("something went wrong")</script> <?php
             return true;
         }
         catch(PDOException $e) {
             echo $e;
-            ?> <script>console.log("something went wrong" <?php echo $e ?>)</script> <?php
             return false;
+        }
+    }
+
+    public function getNumberOfSliders(int $id) : int {
+        try {
+            $stmt = $this->database->connect()->prepare('SELECT * FROM sliders WHERE id_user = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $number = $stmt->rowCount();
+
+            return $number;
+        }
+        catch(PDOException $e) {
+            return 'Error: ' . $e->getMessage();
         }
     }
 

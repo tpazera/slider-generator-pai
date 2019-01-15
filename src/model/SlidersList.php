@@ -7,8 +7,9 @@
  */
 
 require_once 'Slider.php';
+require_once 'ItemsList.php';
 
-class SlidersList
+class SlidersList implements ItemsList
 {
 
     private $sliders = array();
@@ -16,11 +17,11 @@ class SlidersList
     public function __construct(array $slidersList)
     {
         foreach ($slidersList as $slider) {
-            array_push($this->sliders, new Slider($slider['id_slider'], $slider['name'], $slider['height'], $slider['speed'], $slider['user']));
+            array_push($this->sliders, new Slider($slider['id_slider'], $slider['name'], $slider['height'], $slider['speed'], $slider['id_user']));
         }
     }
 
-    public function getSliders(): array
+    public function getList(): array
     {
         return $this->sliders;
     }
