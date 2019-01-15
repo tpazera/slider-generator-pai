@@ -99,10 +99,12 @@ class SliderMapper
             $stmt->execute();
 
             //CREATE FOLDER
-            $folder = dirname(__DIR__).'/resources/upload/'.$id_slider['max_slider'];
+            $folder = dirname(__DIR__).'/resources/upload/'.$id_slider['max_slider'].'/images';
+            $old_umask = umask(0);
             if (!mkdir($folder, 0777, true)) {
                 die('Failed to create folders...');
             }
+            umask($old_umask);
             if (!copy(dirname(__DIR__).'/resources/images/backgrounds/doodles.png', $folder.'/default.png')) {
                 die('Failed to copy default slide\'s background...');
             }
@@ -127,6 +129,13 @@ class SliderMapper
 
             //DELETE FOLDER
             self::deleteDir(dirname(__DIR__).'/resources/upload/'.$id);
+            try {
+                $archive_name = dirname(__DIR__).'/resources/upload/zips/slider'.$_GET["slider"].'.tar';
+                unlink($archive_name);
+                unlink($archive_name.'.gz');
+            } catch(Exception $e) {
+                //echo $e;
+            }
             return true;
         }
         catch(PDOException $e) {
@@ -152,6 +161,21 @@ class SliderMapper
         catch(PDOException $e) {
             echo $e;
             return false;
+        }
+    }
+
+    public function getNumberOfSliders(int $id) : int {
+        try {
+            $stmt = $this->database->connect()->prepare('SELECT * FROM sliders WHERE id_user = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $number = $stmt->rowCount();
+
+            return $number;
+        }
+        catch(PDOException $e) {
+            return 'Error: ' . $e->getMessage();
         }
     }
 

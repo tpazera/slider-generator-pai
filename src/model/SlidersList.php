@@ -17,7 +17,7 @@ class SlidersList implements ItemsList
     public function __construct(array $slidersList)
     {
         foreach ($slidersList as $slider) {
-            array_push($this->sliders, new Slider($slider['id_slider'], $slider['name'], $slider['height'], $slider['speed'], $slider['user']));
+            array_push($this->sliders, new Slider($slider['id_slider'], $slider['name'], $slider['height'], $slider['speed'], $slider['id_user']));
         }
     }
 

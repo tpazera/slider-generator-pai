@@ -49,4 +49,39 @@ class SlideMapper
         }
     }
 
+    public function updateSlide(
+        int $id, string $bgcolor, string $bgsize, string $bg
+    ):bool {
+        try {
+            //UPDATE SLIDER's SETTINGS
+            $stmt = $this->database->connect()->prepare('UPDATE slides SET background_color = :bgcolor, background_image = :bg, background_size = :bgsize WHERE id_slide = :id;');
+            $stmt->bindParam(':bgcolor', $bgcolor, PDO::PARAM_STR);
+            $stmt->bindParam(':bgsize', $bgsize, PDO::PARAM_STR);
+            $stmt->bindParam(':bg', $bg, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+    }
+
+    public function addSlide(
+        int $id
+    ):bool {
+        try {
+            $stmt = $this->database->connect()->prepare('INSERT INTO slides (background_color, background_image, background_size, id_slider) VALUES ("#4377F0", "", "cover", :id_slider);');
+            $stmt->bindParam(':id_slider', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+
+    }
+
 }

@@ -16,9 +16,9 @@ jQuery(document).ready(function () {
                     x: l,
                     y: t
                 },
-                success: function() {
-                    console.log("Position of block updated!");
-
+                success: function(msg) {
+                    if (msg == "cheater") alert("Do not try to cheat!");
+                    else console.log("Position of text updated!");
                 },
                 error: function() {
                     console.log("Something went wrong! Please contact with admin.");
@@ -29,10 +29,11 @@ jQuery(document).ready(function () {
 
     jQuery( ".textcontainer" ).each(function( index ) {
         var id = jQuery(this).attr("data-el");
+        var wWidth = $(window).width() * 0.8;
         var dialog = jQuery( "#dialogText" + id ).dialog({
             autoOpen: false,
-            height: 500,
-            width: 350,
+            height: 600,
+            width: wWidth,
             modal: true,
             buttons: {
                 "Save in database": function() {
@@ -57,6 +58,8 @@ jQuery(document).ready(function () {
         });
 
         jQuery( this ).on( "click", function() {
+            var wWidth = $(window).width() * 0.8;
+            dialog.dialog('option', 'width', wWidth);
             dialog.dialog( "open" );
             console.log(id);
         });
@@ -67,12 +70,17 @@ jQuery(document).ready(function () {
 function updateTextDB(id, dialog) {
     var valid = true;
     jQuery("#text"+ id + ",  #zindexText" + id).removeClass( "ui-state-error" );
-
-    if(jQuery("#text"+ id).val().includes("<script>")) {
+    var text = jQuery("#text"+ id).val();
+    var text = text.replace(/"/g, '\'');
+    if(text.includes("<script>") || text.includes("&lt;script&gt;")) {
+        alert("Do not try to put script! Your text will be removed...");
+        jQuery("#text"+ id).val("");
+        jQuery("#dialogForm" + id + " > fieldset > div > div.note-editing-area > div.note-editable").empty();
         valid = false;
         jQuery("#text"+ id).addClass( "ui-state-error" );
         updateTips("Do not try to put scripts!", id);
     }
+
     if(isNaN(jQuery("#zindexText"+ id).val())) {
         valid = false;
         jQuery("#zindex"+ id).addClass( "ui-state-error" );
@@ -80,7 +88,6 @@ function updateTextDB(id, dialog) {
     }
 
     if ( valid ) {
-        var text = jQuery("#text"+ id).val();
         var zindex = jQuery("#zindexText"+ id).val();
         jQuery.ajax({
             url : setting_apiUrl + '/?page=updatetext',
@@ -90,7 +97,7 @@ function updateTextDB(id, dialog) {
                 text: text,
                 zindex: zindex
             },
-            success: function() {
+            success: function(msg) {
                 console.log("Text updated!");
                 jQuery("#textcontainer"+ id).html(text);
                 jQuery("#textcontainer"+ id).css("z-index", zindex);
@@ -165,7 +172,7 @@ function addText(id) {
                     '                        </form>' +
                     '                    </div>').dialog({
                                             autoOpen: false,
-                                            height: 500,
+                                            height: 600,
                                             width: 350,
                                             modal: true,
                                             buttons: {
@@ -181,8 +188,25 @@ function addText(id) {
                                             }
                                         });
                 jQuery( "#textcontainer" + JSON.parse(data)[0]).on( "click", function() {
+                    var wWidth = $(window).width() * 0.8;
+                    dialog.dialog("option", "width", wWidth);
                     dialog.dialog( "open" );
                     console.log(id);
+                });
+
+                jQuery("#text" + JSON.parse(data)[0]).summernote({
+                    toolbar: [
+                        ["style", ["style"]],
+                        ["font", ["bold", "underline", "clear"]],
+                        ["fontname", ["fontname"]],
+                        ["color", ["color"]],
+                        ["para", ["ul", "ol"]],
+                        //["table", ["table"]],
+                        //["insert", ["link", "picture", "video"]],
+                        //["view", ["fullscreen", "codeview", "help"]]
+                    ],
+                    disableResizeEditor: true,
+                    height: 200
                 });
 
                 jQuery("#elements"+id).append('' +
@@ -213,7 +237,9 @@ function addText(id) {
                 });
             },
             error: function (xhr, textStatus, error) {
-                console.log(xhr.responseText);
+                if(JSON.parse(xhr.responseText)[0] == "cheater") {
+                    alert("Do not try to cheat!");
+                }
                 console.log(xhr.statusText);
                 console.log(textStatus);
                 console.log(error);

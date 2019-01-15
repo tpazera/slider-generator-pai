@@ -8,6 +8,7 @@
 
 require_once 'Text.php';
 require_once 'TextMapper.php';
+require_once 'ItemsList.php';
 
 class TextsList implements ItemsList
 {

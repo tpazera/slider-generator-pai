@@ -113,4 +113,21 @@ class BlockMapper
         }
     }
 
+    public function getOwnerId(
+        int $id
+    ):int {
+        try {
+            //UPDATE TEXT's SETTINGS
+            $stmt = $this->database->connect()->prepare('SELECT sliders.id_user as userid FROM blocks INNER JOIN slides ON blocks.id_slide = slides.id_slide INNER JOIN sliders ON slides.id_slider = sliders.id_slider WHERE blocks.id_block = :id;');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result['userid'];
+        }
+        catch(PDOException $e) {
+            echo $e;
+            return false;
+        }
+    }
+
 }

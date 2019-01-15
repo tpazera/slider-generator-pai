@@ -2,7 +2,7 @@
 
     <h2>
         <?php if(isset($slider)): ?>
-            <span id="sliderHeader"><?php echo $slider->getName(); ?></span> #<?php echo $slider->getId(); ?>
+            <span  data-slider="<?= $slider->getId(); ?>" id="sliderHeader"><?php echo $slider->getName(); ?></span> #<?php echo $slider->getId(); ?>
         <?php endif; ?>
     </h2>
 
@@ -50,7 +50,7 @@
                         <div class="card-body">
                             <div class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; background-image: url('../../resources/upload/<?= $slider->getId(); ?>/<?= $slide->getBgimage(); ?>'); background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
+                                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; <?php if($slide->getBgimage() != '') { ?>background-image: url('../../resources/upload/<?= $slider->getId(); ?>/images/<?= $slide->getBgimage(); ?>'); <?php } ?> background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
                                         <?php $texts = $slide->getTexts(); ?>
                                         <?php foreach($texts->getList() as $text): ?>
                                             <div id="textcontainer<?= $text->getId(); ?>" data-el="<?= $text->getId(); ?>" class="textcontainer element" style="position: absolute; left: <?= $text->getX(); ?>%; top: <?= $text->getY(); ?>%; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
@@ -66,42 +66,45 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
-                                        <h4>Slide's settings</h4>
-                                        <div class="form-group container row">
-                                            <label for="bgcolor<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background color</label>
-                                            <div class="col-md-6 col-12">
-                                                <input id="bgcolor<?= $slide->getId(); ?>" type="color" class="form-control" value="<?= $slide->getBgcolor(); ?>" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group container row">
-                                            <label for="bgimage<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background image</label>
-                                            <div class="col-md-6 col-12">
-                                                <input id="background<?= $slide->getId(); ?>" type="file" class="" value="<?= $slide->getBgimage(); ?>" />
-                                            </div>
-                                        </div>
-                                        <div class="form-group container row">
-                                            <label for="bgsize<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background size</label>
-                                            <div class="col-md-6 col-12">
-                                                <div class="form-check form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="bgsize<?= $slide->getId(); ?>" value="cover" <?php if($slide->getBgsize() == "cover") echo 'checked' ?>> cover
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="bgsize<?= $slide->getId(); ?>" value="contain" <?php if($slide->getBgsize() == "contain") echo 'checked' ?>> contain
-                                                    </label>
-                                                </div>
-                                                <div class="form-check form-check">
-                                                    <label class="form-check-label">
-                                                        <input class="form-check-input" type="radio" name="bgsize<?= $slide->getId(); ?>" value="auto" <?php if($slide->getBgsize() == "auto") echo 'checked' ?>> auto
-                                                    </label>
+                                        <form class="formslide" enctype="multipart/form-data" id="form<?= $slide->getId() ?>">
+                                            <h4>Slide's settings</h4>
+                                            <input type="text" name="id" value="<?= $slide->getId() ?>" style="display: none" />
+                                            <div class="form-group container row">
+                                                <label for="bgcolor<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background color</label>
+                                                <div class="col-md-6 col-12">
+                                                    <input name="bgcolor" id="bgcolor<?= $slide->getId(); ?>" type="color" class="form-control" value="<?= $slide->getBgcolor(); ?>" />
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-group col-12">
-                                            <button id="saveSlide<?= $slide->getId(); ?>" onclick="saveSlideDB(<?= $slide->getId(); ?>)" type="submit" class="btn btn-primary form-control">Save slide in database</button>
-                                        </div>
+                                            <div class="form-group container row">
+                                                <label for="bgimage<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background image</label>
+                                                <div class="col-md-6 col-12">
+                                                    <input name="file" id="background<?= $slide->getId(); ?>" type="file" class="" value="<?= $slide->getBgimage(); ?>" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group container row">
+                                                <label for="bgsize<?= $slide->getId(); ?>" class="col-md-6 col-12 col-form-label">Background size</label>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-check form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="radio" name="bgsize" value="cover" <?php if($slide->getBgsize() == "cover") echo 'checked' ?>> cover
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="radio" name="bgsize" value="contain" <?php if($slide->getBgsize() == "contain") echo 'checked' ?>> contain
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check form-check">
+                                                        <label class="form-check-label">
+                                                            <input class="form-check-input" type="radio" name="bgsize" value="auto" <?php if($slide->getBgsize() == "auto") echo 'checked' ?>> auto
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-12">
+                                                <button id="saveSlide<?= $slide->getId(); ?>" onclick="" type="submit" class="btn btn-primary form-control">Save slide in database</button>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="col-md-5 offset-md-1 col-12">
                                         <h4>Elements</h4>
@@ -129,6 +132,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="dialogscontainer">
                 <?php
                     $x = 0;
@@ -139,7 +144,8 @@
                         <form class="dialogForm" id="dialogForm<?= $text->getId() ?>">
                             <fieldset>
                                 <label for="text">Text</label><br>
-                                <textarea type="text" name="text" id="text<?= $text->getId() ?>" value="<?= $text->getText() ?>" class="form-control text ui-widget-content ui-corner-all vresize" ></textarea>
+                                <textarea class="summernote" name="text" id="text<?= $text->getId() ?>" value="<?= $text->getText() ?>"><?= $text->getText() ?></textarea>
+                                <br>
                                 <label for="zindex">Wage (z-index)</label><br>
                                 <input type="number" min=0 name="zindex" id="zindexText<?= $text->getId() ?>" value="<?= $text->getZindex() ?>" class="form-control text ui-widget-content ui-corner-all">
                                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -168,6 +174,15 @@
             </div>
             <?php $i++ ?>
         <?php endforeach; ?>
+
+        <div class="container">
+            <div class="row">
+                <form onsubmit="return confirm('Do you want to add new slide? All your unsaved changes for slides will disappear! Save all slides in database firstly!')" class="addSlideForm" action="?page=addslide" method="POST">
+                    <input style="display: none" type="text" name="id_slider" value="<?= $slider->getId() ?>" />
+                    <input class="addSlide" type="submit" value="+"/>
+                </form>
+            </div>
+        </div>
     <?php endif ?>
 <?php endif; ?>
 

@@ -8,6 +8,7 @@
 
 require_once 'Block.php';
 require_once 'BlockMapper.php';
+require_once 'ItemsList.php';
 
 class BlocksList implements ItemsList
 {

@@ -16,7 +16,9 @@ jQuery(document).ready(function () {
                     x: l,
                     y: t
                 },
-                success: function() {
+                success: function(msg) {
+                    if (msg == "cheater") alert("Do not try to cheat!");
+                    else console.log("Position of text updated!");
                     console.log("Position of block updated!");
 
                 },
@@ -257,7 +259,9 @@ function addBlock(id) {
                 });
             },
             error: function(xhr, textStatus, error) {
-                console.log(xhr.responseText);
+                if(JSON.parse(xhr.responseText)[0] == "cheater") {
+                    alert("Do not try to cheat!");
+                }
                 console.log(xhr.statusText);
                 console.log(textStatus);
                 console.log(error);

@@ -4,7 +4,6 @@ require_once "AppController.php";
 
 require_once __DIR__.'/../model/SliderMapper.php';
 
-
 class EditorController extends AppController implements Validator
 {
 
@@ -46,6 +45,16 @@ class EditorController extends AppController implements Validator
             http_response_code(404);
             return;
         }
+        //CHECK NUMBER OF BLOCKS
+        $texts = $slide->getTexts();
+        $blocks = $slide->getBlocks();
+        if(sizeof($texts->getList()) + sizeof($blocks->getList()) >= 10) {
+            http_response_code(404);
+            $arr = array();
+            array_push($arr, "cheater");
+            echo json_encode($arr);
+            return;
+        }
         $slide->getBlocks()->addItem($_POST['color'], (float)$_POST['pos'], (int)$_POST['zindex'], (int)$_POST['id_slide']);
         http_response_code(200);
     }
@@ -62,12 +71,28 @@ class EditorController extends AppController implements Validator
             http_response_code(404);
             return;
         }
+        $texts = $slide->getTexts();
+        $blocks = $slide->getBlocks();
+        if(sizeof($texts->getList()) + sizeof($blocks->getList()) >= 10) {
+            http_response_code(404);
+            $arr = array();
+            array_push($arr, "cheater");
+            echo json_encode($arr);
+            return;
+        }
         $slide->getTexts()->addItem("hello world", (float)$_POST['pos'], (int)$_POST['zindex'], (int)$_POST['id_slide']);
         http_response_code(200);
     }
 
 
     public function updateBlock() {
+        $blockMapper = new BlockMapper();
+        $userid = $blockMapper->getOwnerId($_POST['id_block']);
+        if($userid != $_SESSION['id_user']) {
+            echo "cheater";
+            http_response_code(404);
+            return;
+        }
         if (!isset($_POST['id_block']) && !isset($_POST['width']) && !isset($_POST['height']) && !isset($_POST['zindex']) && !isset($_POST['color'])) {
             http_response_code(404);
             return;
@@ -79,6 +104,13 @@ class EditorController extends AppController implements Validator
 
 
     public function updateBlockPos() {
+        $blockMapper = new BlockMapper();
+        $userid = $blockMapper->getOwnerId($_POST['id_block']);
+        if($userid != $_SESSION['id_user']) {
+            echo "cheater";
+            http_response_code(404);
+            return;
+        }
         if (!isset($_POST['id_block']) && !isset($_POST['x']) && !isset($_POST['y'])) {
             http_response_code(404);
             return;
@@ -89,17 +121,30 @@ class EditorController extends AppController implements Validator
     }
 
     public function updateText() {
+        $textMapper = new TextMapper();
+        $userid = $textMapper->getOwnerId($_POST['id_text']);
+        if($userid != $_SESSION['id_user']) {
+            echo "cheater";
+            http_response_code(404);
+            return;
+        }
         if (!isset($_POST['id_text']) && !isset($_POST['text']) && !isset($_POST['zindex'])) {
             http_response_code(404);
             return;
         }
-        $textMapper = new TextMapper();
         $textMapper->updateText((int)$_POST['id_text'], $_POST['text'], (int)$_POST['zindex']);
         http_response_code(200);
     }
 
 
     public function updateTextPos() {
+        $textMapper = new TextMapper();
+        $userid = $textMapper->getOwnerId($_POST['id_text']);
+        if($userid != $_SESSION['id_user']) {
+            echo "cheater";
+            http_response_code(404);
+            return;
+        }
         if (!isset($_POST['id_text']) && !isset($_POST['x']) && !isset($_POST['y'])) {
             http_response_code(404);
             return;
@@ -142,31 +187,28 @@ class EditorController extends AppController implements Validator
     }
 
     public function updateSlide() {
-//        if ($this->isPost() && is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file']) && isset($_POST['id']) && isset($_POST['color']) && isset($_POST['bgsize'])) {
-//
-//            $folder = dirname(__DIR__).'/resources/upload/'.$_POST['id'];
-//            if (!move_uploaded_file($_FILES['file']['tmp_name'], $folder.$_FILES['file']['name'])) {
-//                //die();
-//            }
-//        }
+        if(!empty($_POST['bgsize']) || !empty($_POST['bgcolor']) || !empty($_FILES['file']['name']) || !empty($_POST['id'])) {
+            $uploadedFile = '';
+            $slideMapper = new SlideMapper();
+            $slide = $slideMapper->getSlideById((int)$_POST['id']);
+            $idslider = $slide->getIdSlider();
+            if(!empty($_FILES["file"]["type"])){
+                $fileName = time().'_'.$_FILES['file']['name'];
+                $valid_extensions = array("jpeg", "jpg", "png");
+                $temporary = explode(".", $_FILES["file"]["name"]);
+                $file_extension = end($temporary);
+                if((($_FILES["hard_file"]["type"] == "image/png") || ($_FILES["file"]["type"] == "image/jpg") || ($_FILES["file"]["type"] == "image/jpeg")) && in_array($file_extension, $valid_extensions)){
+                    $sourcePath = $_FILES['file']['tmp_name'];
+                    $targetPath = $_SERVER['DOCUMENT_ROOT'].'/resources/upload/'.$idslider.'/'.$fileName;
+                    if(move_uploaded_file($sourcePath,$targetPath)){
+                        $uploadedFile = $fileName;
+                    }
+                }
+            }
 
-        $folder = dirname(__DIR__).'/resources/sass/';
-        move_uploaded_file($_FILES['file']['tmp_name'], $folder.$_FILES['file']['name']);
-        http_response_code(200);
-
+            echo $targetPath;
+        }
     }
 
-    private function validate(array $file): bool
-    {
-        if ($file['size'] > self::MAX_FILE_SIZE) {
-            return false;
-        }
-
-        if (!isset($file['type']) || !in_array($file['type'], self::SUPPORTED_TYPES)) {
-            return false;
-        }
-
-        return true;
-    }
 
 }

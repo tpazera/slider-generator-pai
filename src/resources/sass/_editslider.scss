@@ -83,3 +83,28 @@ label {
 .dialog {
   display: none;
 }
+
+.addSlideForm {
+  width: 100%;
+  text-align: center;
+}
+
+.addSlide {
+  margin: 25px auto;
+  font-size: 50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  border: none;
+  background-color: #008300;
+  color: white;
+  &:hover {
+    background-color: #00c600;
+  }
+}
+
+body > div.note-popover.popover.in.note-link-popover.bottom, body > div.note-popover.popover.in.note-image-popover.bottom, body > div.note-popover.popover.in.note-table-popover.bottom {
+  display: none;
+}
+
+.ui-dialog { z-index: 1000000000 !important ;}
