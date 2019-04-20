@@ -78,27 +78,22 @@ class SliderMapper
             $stmt->bindParam(':id_user', $id_user, PDO::PARAM_STR);
             $stmt->execute();
 
-            //GET MAX ID SLIDER
             $stmt = $this->database->connect()->prepare('SELECT MAX(id_slider) AS max_slider FROM sliders;');
             $stmt->execute();
             $id_slider = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            //ADD SLIDE
             $stmt = $this->database->connect()->prepare('INSERT INTO slides (background_color, background_image, background_size, id_slider) VALUES ("#4377F0", "default.png", "cover", :id_slider);');
             $stmt->bindParam(':id_slider', $id_slider['max_slider'], PDO::PARAM_STR);
             $stmt->execute();
 
-            //GET MAX ID SLIDE
             $stmt = $this->database->connect()->prepare('SELECT MAX(id_slide) AS max_slide FROM slides;');
             $stmt->execute();
             $id_slide = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            //ADD TEXTBLOCK
             $stmt = $this->database->connect()->prepare('INSERT INTO textblocks (text, z_index, x, y, id_slide) VALUES ("<p>Hello world</p>", 1, 5, 5, :id_slide);');
             $stmt->bindParam(':id_slide', $id_slide['max_slide'], PDO::PARAM_STR);
             $stmt->execute();
 
-            //CREATE FOLDER
             $folder = dirname(__DIR__).'/resources/upload/'.$id_slider['max_slider'].'/images';
             $old_umask = umask(0);
             if (!mkdir($folder, 0777, true)) {

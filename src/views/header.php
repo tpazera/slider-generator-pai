@@ -27,7 +27,9 @@
                         <div class="navbar-nav ml-auto">
                             <a class="nav-item nav-link active" href="/?page=index">Home <span class="sr-only">(current)</span></a>
                             <a class="nav-item nav-link" href="/?page=sliders">Your sliders</a>
-                            <a class="nav-item nav-link" href="/?page=account">Account</a>
+                            <?php if(isset($_SESSION['role']) && $_SESSION['role'] == 1) { ?>
+                                <a class="nav-item nav-link" href="/?page=admin">Admin Panel</a>
+                            <?php } ?>
                             <a class="nav-item nav-link" href="/?page=logout">Logout</a>
                         </div>
                     <?php } else { ?>
