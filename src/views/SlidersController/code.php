@@ -29,7 +29,7 @@
             <?php foreach($slides as $slide): ?>
 
                 <div class="carousel-item <?php if($i == 1) echo 'active' ?>">
-                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; <?php if($slide->getBgimage() != '') { ?>background-image: url('../../resources/upload/<?= $slider->getId(); ?>/<?= $slide->getBgimage(); ?>'); <?php } ?> background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
+                    <div id="bgcontainer<?= $slide->getId(); ?>" class="bgcontainer d-block w-100" style="position: relative; height: <?php echo $slider->getHeight(); ?>px; <?php if($slide->getBgimage() != '') { ?>background-image: url('../../resources/upload/<?= $slider->getId(); ?>/images/<?= $slide->getBgimage(); ?>'); <?php } ?> background-size: <?= $slide->getBgsize(); ?>; background-color: <?= $slide->getBgcolor(); ?>">
                         <?php $texts = $slide->getTexts(); ?>
                         <?php foreach($texts->getList() as $text): ?>
                             <div id="textcontainer<?= $text->getId(); ?>" data-el="<?= $text->getId(); ?>" class="textcontainer element" style="position: absolute; left: <?= $text->getX(); ?>%; top: <?= $text->getY(); ?>%; z-index: <?= $text->getZindex(); ?>"><?= $text->getText(); ?></div>
